@@ -31,7 +31,7 @@ myINFO="\
 Disclaimer:
 This script will install T-Pot on this system.
 By running the script you know what you are doing:
-1. SSH will be reconfigured to tcp/64295.
+1. SSH will remain at tcp/22.
 2. Please ensure other means of access to this system in case something goes wrong.
 3. At best this script will be executed on the console instead through a SSH session.
 
@@ -146,7 +146,7 @@ logpath = /var/log/auth.log
 
 [sshd]
 enabled = true
-port    = 64295
+port    = 22
 filter  = sshd
 logpath = /var/log/auth.log
 "
@@ -159,7 +159,7 @@ ListenStream=
 ListenStream=64294
 "
 mySSHPORT="
-Port 64295
+Port 22
 "
 myRANDOM_HOUR=$(shuf -i 2-22 -n 1)
 myRANDOM_MINUTE=$(shuf -i 0-59 -n 1)
