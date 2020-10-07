@@ -11,6 +11,8 @@ steps:
   args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/elasticsearch:latest', 'docker/elk/elasticsearch']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/kibana:latest', 'docker/elk/kibana']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/head:latest', 'docker/elk/head']
 
 images:
 - 'us.gcr.io/$PROJECT_ID/suricata:latest'
@@ -19,3 +21,4 @@ images:
 - 'us.gcr.io/$PROJECT_ID/kibana:latest'
 - 'us.gcr.io/$PROJECT_ID/elasticsearch:latest'
 - 'us.gcr.io/$PROJECT_ID/logstash:latest'
+- 'us.gcr.io/$PROJECT_ID/head:latest'
