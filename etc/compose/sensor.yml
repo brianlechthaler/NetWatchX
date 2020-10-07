@@ -17,7 +17,7 @@ services:
      - NET_ADMIN
      - SYS_NICE
      - NET_RAW
-    image: "ghcr.io/telekom-security/fatt:2006"
+    image: "us.gcr.io/neutralthreat/fatt:2006"
     volumes:
      - /data/fatt/log:/opt/fatt/log
 
@@ -26,7 +26,7 @@ services:
     container_name: p0f
     restart: always
     network_mode: "host"
-    image: "ghcr.io/telekom-security/p0f:2006"
+    image: "us.gcr.io/neutralthreat/p0f:2006"
     read_only: true
     volumes:
      - /data/p0f/log:/var/log/p0f
@@ -43,7 +43,7 @@ services:
      - NET_ADMIN
      - SYS_NICE
      - NET_RAW
-    image: "ghcr.io/telekom-security/suricata:2006"
+    image: "us.gcr.io/neutralthreat/suricata:2006"
     volumes:
      - /data/suricata/log:/var/log/suricata
 
