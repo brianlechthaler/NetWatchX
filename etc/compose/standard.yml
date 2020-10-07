@@ -17,7 +17,7 @@ services:
      - NET_ADMIN
      - SYS_NICE
      - NET_RAW
-    image: "ghcr.io/telekom-security/fatt:2006"
+    image: "us.gcr.io/neutralthreat/fatt:2006"
     volumes:
      - /data/fatt/log:/opt/fatt/log
 
@@ -26,7 +26,7 @@ services:
     container_name: p0f
     restart: always
     network_mode: "host"
-    image: "ghcr.io/telekom-security/p0f:2006"
+    image: "us.gcr.io/neutralthreat/p0f:2006"
     read_only: true
     volumes:
      - /data/p0f/log:/var/log/p0f
@@ -43,7 +43,7 @@ services:
      - NET_ADMIN
      - SYS_NICE
      - NET_RAW
-    image: "ghcr.io/telekom-security/suricata:2006"
+    image: "us.gcr.io/neutralthreat/suricata:2006"
     volumes:
      - /data/suricata/log:/var/log/suricata
 
@@ -60,7 +60,7 @@ services:
      - cyberchef_local
     ports:
      - "127.0.0.1:64299:8000"
-    image: "ghcr.io/telekom-security/cyberchef:2006"
+    image: "us.gcr.io/neutralthreat/cyberchef:2006"
     read_only: true
 
 #### ELK
@@ -84,7 +84,7 @@ services:
     mem_limit: 4g
     ports:
      - "127.0.0.1:64298:9200"
-    image: "ghcr.io/telekom-security/elasticsearch:2006"
+    image: "us.gcr.io/neutralthreat/elasticsearch:2006"
     volumes:
      - /data:/data
 
@@ -97,7 +97,7 @@ services:
         condition: service_healthy
     ports:
      - "127.0.0.1:64296:5601"
-    image: "ghcr.io/telekom-security/kibana:2006"
+    image: "us.gcr.io/neutralthreat/kibana:2006"
 
 ## Logstash service
   logstash:
@@ -110,7 +110,7 @@ services:
         condition: service_healthy
     env_file:
      - /opt/tpot/etc/compose/elk_environment
-    image: "ghcr.io/telekom-security/logstash:2006"
+    image: "us.gcr.io/neutralthreat/logstash:2006"
     volumes:
      - /data:/data
 
@@ -123,6 +123,6 @@ services:
         condition: service_healthy
     ports:
      - "127.0.0.1:64302:9100"
-    image: "ghcr.io/telekom-security/head:2006"
+    image: "us.gcr.io/neutralthreat/head:2006"
     read_only: true
 
