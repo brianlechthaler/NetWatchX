@@ -1,0 +1,21 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/suricata:latest', 'suricata/']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/p0f:latest', 'p0f/']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/fatt:latest', 'fatt/']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/logstash:latest', 'elk/logstash']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/elasticsearch:latest', 'elk/elasticsearch']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/kibana:latest', 'elk/kibana']
+
+images:
+- 'us.gcr.io/$PROJECT_ID/suricata:latest'
+- 'us.gcr.io/$PROJECT_ID/p0f:latest'
+- 'us.gcr.io/$PROJECT_ID/fatt:latest'
+- 'us.gcr.io/$PROJECT_ID/kibana:latest'
+- 'us.gcr.io/$PROJECT_ID/elasticsearch:latest'
+- 'us.gcr.io/$PROJECT_ID/logstash:latest'
