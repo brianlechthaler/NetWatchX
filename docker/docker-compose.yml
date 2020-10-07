@@ -15,17 +15,17 @@ services:
 # Fatt service
   fatt:
     build: fatt/.
-    image: "ghcr.io/telekom-security/fatt:2006"
+    image: "us.gcr.io/neutralthreat/fatt:2006"
 
 # P0f service
   p0f:
     build: p0f/.
-    image: "ghcr.io/telekom-security/p0f:2006"
+    image: "us.gcr.io/neutralthreat/p0f:2006"
 
 # Suricata service
   suricata:
     build: suricata/.
-    image: "ghcr.io/telekom-security/suricata:2006"
+    image: "us.gcr.io/neutralthreat/suricata:2006"
 
 
 ##################
@@ -36,19 +36,19 @@ services:
 ## Elasticsearch service
   elasticsearch:
     build: elk/elasticsearch/.
-    image: "ghcr.io/telekom-security/elasticsearch:2006"
+    image: "us.gcr.io/neutralthreat/elasticsearch:2006"
 
 ## Kibana service
   kibana:
     build: elk/kibana/.
-    image: "ghcr.io/telekom-security/kibana:2006"
+    image: "us.gcr.io/neutralthreat/kibana:2006"
 
 ## Logstash service
   logstash:
     build: elk/logstash/.
-    image: "ghcr.io/telekom-security/logstash:2006"
+    image: "us.gcr.io/neutralthreat/logstash:2006"
 
 ## Elasticsearch-head service
   head:
     build: elk/head/.
-    image: "ghcr.io/telekom-security/head:2006"
+    image: "us.gcr.io/neutralthreat/head:2006"
