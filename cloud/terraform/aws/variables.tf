@@ -1,3 +1,8 @@
+variable "target_net" {
+  default = ["10.0.0.0/8"]
+  description = "accept incoming traffic from this CIDR-formatted IP range/address"
+}
+
 variable "admin_ip" {
   default     = ["127.0.0.1/32"]
   description = "admin IP addresses in CIDR format"
