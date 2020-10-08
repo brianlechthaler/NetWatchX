@@ -14,6 +14,8 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/head:latest', 'docker/elk/head']
 timeout: 1200s
+options:
+ machineType: 'N1_HIGHCPU_8'
 images:
 - 'us.gcr.io/$PROJECT_ID/suricata:latest'
 - 'us.gcr.io/$PROJECT_ID/p0f:latest'
