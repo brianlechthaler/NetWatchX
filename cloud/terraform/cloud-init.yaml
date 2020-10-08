@@ -5,8 +5,8 @@ packages:
   - git
 
 runcmd:
-  - git clone https://github.com/telekom-security/tpotce /root/tpot
-  - /root/tpot/iso/installer/install.sh --type=auto --conf=/root/tpot.conf
+  - git clone https://github.com/brianlechthaler/NetWatchX /root/nwx
+  - /root/nwx/iso/installer/install.sh --type=auto --conf=/root/tpot.conf
   - rm /root/tpot.conf
   - /sbin/shutdown -r now
 
