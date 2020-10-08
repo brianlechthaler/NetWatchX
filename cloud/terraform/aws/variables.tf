@@ -25,7 +25,7 @@ variable "ec2_ssh_key_name" {
 # https://aws.amazon.com/ec2/instance-types/
 # t3a.medium = 2 vCPU, 4 GiB RAM
 variable "ec2_instance_type" {
-  default = "t3a.medium"
+  default = "t3a.large"
 }
 
 # Refer to https://wiki.debian.org/Cloud/AmazonEC2Image/Buster
