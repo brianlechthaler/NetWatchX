@@ -84,10 +84,10 @@ RUN    apk -U add \
 	--enable-gccprotect \
 	--enable-pie \
 	--enable-luajit && \
-    make && \
-    make check && \
-    make install && \
-    make install-full && \
+    make -j $(nproc) && \
+    make -j $(nproc) check && \
+    make -j $(nproc) install && \
+    make -j $(nproc) install-full && \
 #
 # Setup user, groups and configs
     addgroup -g 2000 suri && \
