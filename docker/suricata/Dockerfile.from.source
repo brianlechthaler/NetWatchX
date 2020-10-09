@@ -51,6 +51,7 @@ RUN    apk -U add \
                  nspr-dev \
                  pcre-dev \
                  python3 \
+		 py3-pip \
                  rust \
                  yaml-dev && \
 #
