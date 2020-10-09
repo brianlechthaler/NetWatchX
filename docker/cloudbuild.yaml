@@ -1,6 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/suricata:latest', 'docker/suricata/']
+  args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/suricata:latest', '-f', 'docker/suricata/Dockerfile.from.source', 'docker/suricata/']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/p0f:latest', 'docker/p0f/']
 - name: 'gcr.io/cloud-builders/docker'
