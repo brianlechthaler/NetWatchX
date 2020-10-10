@@ -114,7 +114,7 @@ services:
     image: "us.gcr.io/neutralthreat/head:2006"
     read_only: true
 
- nginx:
+  nginx:
     container_name: nginx
     restart: always
     environment:
