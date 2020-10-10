@@ -47,21 +47,9 @@ services:
     volumes:
      - /data/suricata/log:/var/log/suricata
 
-
 ##################
 #### Tools
 ##################
-
-# Cyberchef service
-  cyberchef:
-    container_name: cyberchef
-    restart: always
-    networks:
-     - cyberchef_local
-    ports:
-     - "127.0.0.1:64299:8000"
-    image: "us.gcr.io/neutralthreat/cyberchef:2006"
-    read_only: true
 
 #### ELK
 ## Elasticsearch service
