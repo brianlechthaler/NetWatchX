@@ -1,5 +1,5 @@
-cluster.name: tpotcluster
-node.name: "tpotcluster-node-01"
+cluster.name: nwxcluster
+node.name: "nwxcluster-node-01"
 xpack.ml.enabled: false
 xpack.security.enabled: false
 #xpack.ilm.enabled: false
@@ -11,6 +11,6 @@ http.cors.enabled: true
 http.cors.allow-origin: "*"
 indices.query.bool.max_clause_count: 2000
 cluster.initial_master_nodes:
-- "tpotcluster-node-01"
+- "nwxcluster-node-01"
 discovery.zen.ping.unicast.hosts:
 - localhost 
