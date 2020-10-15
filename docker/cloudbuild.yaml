@@ -13,6 +13,8 @@ steps:
   args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/kibana:latest', 'docker/elk/kibana']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/head:latest', 'docker/elk/head']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/tshark:latest', 'docker/tshark']
 timeout: 1200s
 options:
  machineType: 'N1_HIGHCPU_32'
@@ -24,3 +26,4 @@ images:
 - 'us.gcr.io/$PROJECT_ID/elasticsearch:latest'
 - 'us.gcr.io/$PROJECT_ID/logstash:latest'
 - 'us.gcr.io/$PROJECT_ID/head:latest'
+- 'us.gcr.io/$PROJECT_ID/tshark:latest'

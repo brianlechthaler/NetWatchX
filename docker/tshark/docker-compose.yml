@@ -1,0 +1,14 @@
+version: '2.3'
+
+services:
+
+# tshark service
+  tshark:
+    build: .
+    container_name: tshark
+    restart: always
+    network_mode: "host"
+    image: "us.gcr.io/neutralthreat/tshark:latest"
+    volumes:
+     - /data/tshark:/opt/data/tshark
+
