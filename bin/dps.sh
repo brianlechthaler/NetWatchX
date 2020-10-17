@@ -10,7 +10,7 @@ fi
 
 # Show current status of T-Pot containers
 myPARAM="$1"
-myCONTAINERS="$(cat /opt/tpot/etc/tpot.yml | grep -v '#' | grep container_name | cut -d: -f2 | sort | tr -d " ")"
+myCONTAINERS="$(cat /opt/nwx/etc/nwx.yml | grep -v '#' | grep container_name | cut -d: -f2 | sort | tr -d " ")"
 myRED="[1;31m"
 myGREEN="[1;32m"
 myBLUE="[1;34m"

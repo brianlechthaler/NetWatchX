@@ -1,29 +1,29 @@
 - name: Create T-Pot name
   shell: echo t-pot-ansible-$(pwgen -ns 6 -1)
-  register: tpot_name
+  register: nwx_name
 
 - name: Create security group
   os_security_group:
     cloud: open-telekom-cloud
-    name: sg-tpot-any
-    description: tpot any-any
+    name: sg-nwx-any
+    description: nwx any-any
 
 - name: Add rules to security group
   os_security_group_rule:
     cloud: open-telekom-cloud
-    security_group: sg-tpot-any
+    security_group: sg-nwx-any
     remote_ip_prefix: 0.0.0.0/0
 
 - name: Create network
   os_network:
     cloud: open-telekom-cloud
-    name: network-tpot
+    name: network-nwx
 
 - name: Create subnet
   os_subnet:
     cloud: open-telekom-cloud
-    network_name: network-tpot
-    name: subnet-tpot
+    network_name: network-nwx
+    name: subnet-nwx
     cidr: 192.168.0.0/24
     dns_nameservers:
       - 1.1.1.1
@@ -32,14 +32,14 @@
 - name: Create router
   os_router:
     cloud: open-telekom-cloud
-    name: router-tpot
+    name: router-nwx
     interfaces:
-      - subnet-tpot
+      - subnet-nwx
 
 - name: Launch an instance
   os_server:
     cloud: open-telekom-cloud
-    name: "{{ tpot_name.stdout }}"
+    name: "{{ nwx_name.stdout }}"
     availability_zone: "{{ availability_zone }}"
     image: "{{ image }}"
     boot_from_volume: yes
@@ -47,12 +47,12 @@
     key_name: "{{ key_name }}"
     timeout: 200
     flavor: "{{ flavor }}"
-    security_groups: sg-tpot-any
-    network: network-tpot
-  register: tpot
+    security_groups: sg-nwx-any
+    network: network-nwx
+  register: nwx
 
 - name: Add instance to inventory
   add_host:
-    hostname: "{{ tpot_name.stdout }}"
-    ansible_host: "{{ tpot.server.public_v4 }}"
+    hostname: "{{ nwx_name.stdout }}"
+    ansible_host: "{{ nwx.server.public_v4 }}"
     groups: TPOT

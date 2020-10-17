@@ -5,7 +5,7 @@ myES="http://127.0.0.1:64298/"
 myESSTATUS=$(curl -s -XGET ''$myES'_cluster/health' | jq '.' | grep -c "green\|yellow")
 if ! [ "$myESSTATUS" = "1" ]
   then
-    echo "### Elasticsearch is not available, try starting via 'systemctl start tpot'."
+    echo "### Elasticsearch is not available, try starting via 'systemctl start nwx'."
     exit
   else
     echo "### Elasticsearch is available, now continuing."

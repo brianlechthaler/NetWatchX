@@ -6,8 +6,8 @@
     group: root
     mode: 0644
 
-- name: Patching tpot.yml with custom ews configuration file
+- name: Patching nwx.yml with custom ews configuration file
   lineinfile:
-    path: /opt/tpot/etc/tpot.yml
+    path: /opt/nwx/etc/nwx.yml
     insertafter: "/opt/ewsposter/ews.ip"
     line: "     - /data/ews/conf/ews.cfg:/opt/ewsposter/ews.cfg"

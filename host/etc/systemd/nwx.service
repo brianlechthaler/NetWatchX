@@ -9,14 +9,14 @@ RestartSec=5
 TimeoutSec=infinity
 
 # Get and set internal, external IP infos, but ignore errors
-ExecStartPre=-/opt/tpot/bin/updateip.sh
+ExecStartPre=-/opt/nwx/bin/updateip.sh
 
 # Clear state or if persistence is enabled rotate and compress logs from /data
-ExecStartPre=-/bin/bash -c '/opt/tpot/bin/clean.sh on'
+ExecStartPre=-/bin/bash -c '/opt/nwx/bin/clean.sh on'
 
 # Remove old containers, images and volumes
-ExecStartPre=-/usr/bin/docker-compose -f /opt/tpot/etc/tpot.yml down -v
-ExecStartPre=-/usr/bin/docker-compose -f /opt/tpot/etc/tpot.yml rm -v
+ExecStartPre=-/usr/bin/docker-compose -f /opt/nwx/etc/nwx.yml down -v
+ExecStartPre=-/usr/bin/docker-compose -f /opt/nwx/etc/nwx.yml rm -v
 ExecStartPre=-/bin/bash -c 'docker network rm $(docker network ls -q)'
 ExecStartPre=-/bin/bash -c 'docker volume rm $(docker volume ls -q)'
 ExecStartPre=-/bin/bash -c 'docker rm -v $(docker ps -aq)'
@@ -29,16 +29,16 @@ ExecStartPre=/bin/bash -c '/sbin/ip link set $(/sbin/ip address | grep "^2: " | 
 
 # Set iptables accept rules to avoid forwarding to honeytrap / NFQUEUE
 # Forward all other connections to honeytrap / NFQUEUE
-ExecStartPre=/opt/tpot/bin/rules.sh /opt/tpot/etc/tpot.yml set
+ExecStartPre=/opt/nwx/bin/rules.sh /opt/nwx/etc/nwx.yml set
 
 # Compose T-Pot up
-ExecStart=/usr/bin/docker-compose -f /opt/tpot/etc/tpot.yml up --no-color
+ExecStart=/usr/bin/docker-compose -f /opt/nwx/etc/nwx.yml up --no-color
 
 # Compose T-Pot down, remove containers and volumes
-ExecStop=/usr/bin/docker-compose -f /opt/tpot/etc/tpot.yml down -v
+ExecStop=/usr/bin/docker-compose -f /opt/nwx/etc/nwx.yml down -v
 
 # Remove only previously set iptables rules
-ExecStopPost=/opt/tpot/bin/rules.sh /opt/tpot/etc/tpot.yml unset
+ExecStopPost=/opt/nwx/bin/rules.sh /opt/nwx/etc/nwx.yml unset
 
 [Install]
 WantedBy=multi-user.target

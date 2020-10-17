@@ -17,7 +17,7 @@ myBACKTITLE="NetWatchX-Installer"
 myCONF_FILE="/root/installer/iso.conf"
 myPROGRESSBOXCONF=" --backtitle "$myBACKTITLE" --progressbox 24 80"
 mySITES="https://ghcr.io https://github.com https://pypi.python.org https://debian.org"
-myTPOTCOMPOSE="/opt/tpot/etc/tpot.yml"
+myTPOTCOMPOSE="/opt/nwx/etc/nwx.yml"
 myLSB_STABLE_SUPPORTED="stretch buster"
 myLSB_TESTING_SUPPORTED="stable"
 myREMOTESITES="https://hub.docker.com https://github.com https://pypi.python.org https://debian.org https://listbot.sicherheitstacho.eu"
@@ -167,16 +167,16 @@ myDEL_HOUR=$(($myRANDOM_HOUR+1))
 myPULL_HOUR=$(($myRANDOM_HOUR-2))
 myCRONJOBS="
 # Check if updated images are available and download them
-$myRANDOM_MINUTE $myPULL_HOUR * * *      root    docker-compose -f /opt/tpot/etc/tpot.yml pull
+$myRANDOM_MINUTE $myPULL_HOUR * * *      root    docker-compose -f /opt/nwx/etc/nwx.yml pull
 
 # Delete elasticsearch logstash indices older than 90 days
-$myRANDOM_MINUTE $myDEL_HOUR * * *      root    curator --config /opt/tpot/etc/curator/curator.yml /opt/tpot/etc/curator/actions.yml
+$myRANDOM_MINUTE $myDEL_HOUR * * *      root    curator --config /opt/nwx/etc/curator/curator.yml /opt/nwx/etc/curator/actions.yml
 
 # Uploaded binaries are not supposed to be downloaded
 */1 * * * *     root    mv --backup=numbered /data/dionaea/roots/ftp/* /data/dionaea/binaries/
 
 # Daily reboot
-$myRANDOM_MINUTE $myRANDOM_HOUR * * 1-6      root    systemctl stop tpot && docker stop \$(docker ps -aq) || docker rm \$(docker ps -aq) || reboot
+$myRANDOM_MINUTE $myRANDOM_HOUR * * 1-6      root    systemctl stop nwx && docker stop \$(docker ps -aq) || docker rm \$(docker ps -aq) || reboot
 
 # Check for updated packages every sunday, upgrade and reboot
 $myRANDOM_MINUTE $myRANDOM_HOUR * * 0     root    apt-fast autoclean -y && apt-fast autoremove -y && apt-fast update -y && apt-fast upgrade -y && sleep 10 && reboot
@@ -409,9 +409,9 @@ for i in "$@"
       --help)
         echo "Usage: $0 <options>"
         echo
-        echo "--conf=<Path to \"tpot.conf\">"
+        echo "--conf=<Path to \"nwx.conf\">"
 	echo "  Use this if you want to automatically deploy a T-Pot instance (--type=auto implied)."
-        echo "  A configuration example is available in \"tpotce/iso/installer/tpot.conf.dist\"."
+        echo "  A configuration example is available in \"nwxce/iso/installer/nwx.conf.dist\"."
         echo
         echo "--type=<[user, auto, iso]>"
 	echo "  user, use this if you want to manually install a T-Pot on a Debian (Stable) machine."
@@ -437,7 +437,7 @@ fi
 if [ -s "$myTPOT_CONF_FILE" ] && [ "$myTPOT_CONF_FILE" != "" ];
   then
     myTPOT_DEPLOYMENT_TYPE="auto"
-    if [ "$(head -n 1 $myTPOT_CONF_FILE | grep -c "# tpot")" == "1" ];
+    if [ "$(head -n 1 $myTPOT_CONF_FILE | grep -c "# nwx")" == "1" ];
       then
         source "$myTPOT_CONF_FILE"
       else
@@ -704,17 +704,17 @@ hash -r
 if ! [ "$myTPOT_DEPLOYMENT_TYPE" == "iso" ];
   then
     fuBANNER "Cloning T-Pot"
-    git clone https://github.com/brianlechthaler/NetWatchX /opt/tpot
+    git clone https://github.com/brianlechthaler/NetWatchX /opt/nwx
 fi
 
 # Let's create the T-Pot user
 fuBANNER "Create user"
-addgroup --gid 2000 tpot
-adduser --system --no-create-home --uid 2000 --disabled-password --disabled-login --gid 2000 tpot
+addgroup --gid 2000 nwx
+adduser --system --no-create-home --uid 2000 --disabled-password --disabled-login --gid 2000 nwx
 
 # Let's set the hostname
-a=$(fuRANDOMWORD /opt/tpot/host/usr/share/dict/a.txt)
-n=$(fuRANDOMWORD /opt/tpot/host/usr/share/dict/n.txt)
+a=$(fuRANDOMWORD /opt/nwx/host/usr/share/dict/a.txt)
+n=$(fuRANDOMWORD /opt/nwx/host/usr/share/dict/n.txt)
 myHOST=$a$n
 fuBANNER "Set hostname"
 hostnamectl set-hostname $myHOST
@@ -739,27 +739,27 @@ sed -i '2i\auth requisite pam_succeed_if.so uid >= 1000' /etc/pam.d/cockpit
 case $myCONF_TPOT_FLAVOR in
   STANDARD)
     fuBANNER "STANDARD"
-    ln -s /opt/tpot/etc/compose/standard.yml $myTPOTCOMPOSE
+    ln -s /opt/nwx/etc/compose/standard.yml $myTPOTCOMPOSE
   ;;
   SENSOR)
     fuBANNER "SENSOR"
-    ln -s /opt/tpot/etc/compose/sensor.yml $myTPOTCOMPOSE
+    ln -s /opt/nwx/etc/compose/sensor.yml $myTPOTCOMPOSE
   ;;
   INDUSTRIAL)
     fuBANNER "INDUSTRIAL"
-    ln -s /opt/tpot/etc/compose/industrial.yml $myTPOTCOMPOSE
+    ln -s /opt/nwx/etc/compose/industrial.yml $myTPOTCOMPOSE
   ;;
   COLLECTOR)
     fuBANNER "COLLECTOR"
-    ln -s /opt/tpot/etc/compose/collector.yml $myTPOTCOMPOSE
+    ln -s /opt/nwx/etc/compose/collector.yml $myTPOTCOMPOSE
   ;;
   NEXTGEN)
     fuBANNER "NEXTGEN"
-    ln -s /opt/tpot/etc/compose/nextgen.yml $myTPOTCOMPOSE
+    ln -s /opt/nwx/etc/compose/nextgen.yml $myTPOTCOMPOSE
   ;;
   MEDICAL)
     fuBANNER "MEDICAL"
-    ln -s /opt/tpot/etc/compose/medical.yml $myTPOTCOMPOSE
+    ln -s /opt/nwx/etc/compose/medical.yml $myTPOTCOMPOSE
   ;;
 esac
 
@@ -783,7 +783,7 @@ echo "$mySYSCTLCONF" | tee -a /etc/sysctl.conf
 
 # Let's setup fail2ban config
 fuBANNER "Setup fail2ban"
-echo "$myFAIL2BANCONF" | tee /etc/fail2ban/jail.d/tpot.conf
+echo "$myFAIL2BANCONF" | tee /etc/fail2ban/jail.d/nwx.conf
 
 # Fix systemd error https://github.com/systemd/systemd/issues/3374
 fuBANNER "Systemd fix"
@@ -827,21 +827,21 @@ touch /data/nginx/log/error.log
 
 # Let's copy some files
 fuBANNER "Copy configs"
-tar xvfz /opt/tpot/etc/objects/elkbase.tgz -C /
-cp /opt/tpot/host/etc/systemd/* /etc/systemd/system/
-systemctl enable tpot
+tar xvfz /opt/nwx/etc/objects/elkbase.tgz -C /
+cp /opt/nwx/host/etc/systemd/* /etc/systemd/system/
+systemctl enable nwx
 
 # Let's take care of some files and permissions
 fuBANNER "Permissions"
 chmod 770 -R /data
 if [ "$myTPOT_DEPLOYMENT_TYPE" == "iso" ];
   then
-    usermod -a -G tpot tsec
+    usermod -a -G nwx tsec
     chown tsec:tsec -R /home/tsec/.ssh
   else
-    usermod -a -G tpot $(who am i | awk '{ print $1 }')
+    usermod -a -G nwx $(who am i | awk '{ print $1 }')
 fi
-chown tpot:tpot -R /data
+chown nwx:nwx -R /data
 chmod 644 -R /data/nginx/conf
 chmod 644 -R /data/nginx/cert
 
@@ -859,26 +859,26 @@ sed -i 's#FONTSIZE=".*#FONTSIZE="12x6"#' /etc/default/console-setup
 update-initramfs -u
 sed -i 's#After=.*#After=systemd-tmpfiles-setup.service console-screen.service kbd.service local-fs.target#' /etc/systemd/system/multi-user.target.wants/console-setup.service
 
-# Let's enable a color prompt and add /opt/tpot/bin to path
+# Let's enable a color prompt and add /opt/nwx/bin to path
 fuBANNER "Setup prompt"
 tee -a /root/.bashrc <<EOF
 $mySHELLCHECK
 $myROOTPROMPT
 $myROOTCOLORS
-PATH="$PATH:/opt/tpot/bin"
+PATH="$PATH:/opt/nwx/bin"
 EOF
 for i in $(ls -d /home/*/)
   do
 tee -a $i.bashrc <<EOF
 $mySHELLCHECK
 $myUSERPROMPT
-PATH="$PATH:/opt/tpot/bin"
+PATH="$PATH:/opt/nwx/bin"
 EOF
 done
 
 # Let's create ews.ip before reboot and prevent race condition for first start
 fuBANNER "Update IP"
-/opt/tpot/bin/updateip.sh
+/opt/nwx/bin/updateip.sh
 
 # Let's clean up apt
 fuBANNER "Clean up"
@@ -886,7 +886,7 @@ apt-fast autoclean -y
 apt-fast autoremove -y
 
 # Final steps
-cp /opt/tpot/host/etc/rc.local /etc/rc.local && \
+cp /opt/nwx/host/etc/rc.local /etc/rc.local && \
 rm -rf /root/installer && \
 rm -rf /etc/issue.d/cockpit.issue && \
 rm -rf /etc/motd.d/cockpit && \

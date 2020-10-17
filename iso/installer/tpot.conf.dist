@@ -1,4 +1,4 @@
-# tpot configuration file
+# nwx configuration file
 # myCONF_TPOT_FLAVOR=[STANDARD, SENSOR, INDUSTRIAL, COLLECTOR, NEXTGEN]
 myCONF_TPOT_FLAVOR='STANDARD'
 myCONF_WEB_USER='webuser'

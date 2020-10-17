@@ -10,12 +10,12 @@ fi
 
 # set backtitle, get filename
 myBACKTITLE="T-Pot Edition Selection Tool"
-myYMLS=$(cd /opt/tpot/etc/compose/ && ls -1 *.yml)
-myLINK="/opt/tpot/etc/tpot.yml"
+myYMLS=$(cd /opt/nwx/etc/compose/ && ls -1 *.yml)
+myLINK="/opt/nwx/etc/nwx.yml"
 
 # Let's load docker images in parallel
 function fuPULLIMAGES {
-local myTPOTCOMPOSE="/opt/tpot/etc/tpot.yml"
+local myTPOTCOMPOSE="/opt/nwx/etc/nwx.yml"
 for name in $(cat $myTPOTCOMPOSE | grep -v '#' | grep image | cut -d'"' -f2 | uniq)
   do
     docker pull $name &
@@ -40,16 +40,16 @@ myOK=$?
 if [ "$myOK" == "0" ];
   then
     echo "OK - Activating and downloading latest images."
-    systemctl stop tpot
+    systemctl stop nwx
     if [ "$(docker ps -aq)" != "" ];
       then
         docker stop $(docker ps -aq)
         docker rm $(docker ps -aq)
     fi
     rm -f $myLINK
-    ln -s /opt/tpot/etc/compose/$myEDITION $myLINK
+    ln -s /opt/nwx/etc/compose/$myEDITION $myLINK
     fuPULLIMAGES
-    systemctl start tpot
+    systemctl start nwx
     echo "Done. Use \"dps.sh\" for monitoring"
   else 
     echo "Have a nice day!"

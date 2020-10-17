@@ -13,7 +13,7 @@ myES="http://127.0.0.1:64298/"
 myESSTATUS=$(curl -s -XGET ''$myES'_cluster/health' | jq '.' | grep -c green)
 if ! [ "$myESSTATUS" = "1" ]
   then
-    echo "### Elasticsearch is not available, try starting via 'systemctl start tpot'."
+    echo "### Elasticsearch is not available, try starting via 'systemctl start nwx'."
     exit
   else
     echo "### Elasticsearch is available, now continuing."
@@ -30,14 +30,14 @@ myKIBANAINDEXPATH=$myELKPATH/nodes/0/indices/$myKIBANAINDEXNAME
 # Let's ensure normal operation on exit or if interrupted ...
 function fuCLEANUP {
   ### Start ELK
-  systemctl start tpot
+  systemctl start nwx
   echo "### Now starting T-Pot ..."
 }
 trap fuCLEANUP EXIT
 
 # Stop T-Pot to lift db lock
 echo "### Now stopping T-Pot"
-systemctl stop tpot
+systemctl stop nwx
 sleep 2
 
 # Backup DB in 2 flavors

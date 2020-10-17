@@ -1,5 +1,5 @@
 # T-Pot (Standard)
-# Do not erase ports sections, these are used by /opt/tpot/bin/rules.sh to setup iptables ACCEPT rules for NFQ (honeytrap / glutton)
+# Do not erase ports sections, these are used by /opt/nwx/bin/rules.sh to setup iptables ACCEPT rules for NFQ (honeytrap / glutton)
 version: '2.3'
 
 services:
@@ -97,7 +97,7 @@ services:
       elasticsearch:
         condition: service_healthy
     env_file:
-     - /opt/tpot/etc/compose/elk_environment
+     - /opt/nwx/etc/compose/elk_environment
     image: "us.gcr.io/neutralthreat/logstash:2006"
     volumes:
      - /data:/data
