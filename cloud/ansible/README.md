@@ -22,7 +22,7 @@ This example showcases the deployment on our own OpenStack based Public Cloud Of
   - [Ansible remote user](#remote-user)
   - [Instance settings](#instance-settings)
   - [User password](#user-password)
-  - [Configure `tpot.conf.dist`](#tpot-conf)
+  - [Configure `nwx.conf.dist`](#nwx-conf)
   - [Optional: Custom `ews.cfg`](#ews-cfg)
   - [Optional: Custom HPFEEDS](#hpfeeds)
 - [Deploying a T-Pot](#deploy)
@@ -71,7 +71,7 @@ For that, go to the [Web Console](https://auth.otc.t-systems.com/authui/login) a
 <a name="project"></a>
 ## Create new project
 I strongly advise you to create a separate project for the T-Pots in your tenant.  
-In my case I named it `tpot`.
+In my case I named it `nwx`.
 
 ![Create new project](doc/otc_1_project.gif)
 
@@ -95,8 +95,8 @@ Import your SSH public key.
 
 <a name="clone-git"></a>
 # Clone Git Repository
-Clone the `tpotce` repository to your Ansible Master:  
-`git clone https://github.com/telekom-security/tpotce.git`  
+Clone the `nwxce` repository to your Ansible Master:  
+`git clone https://github.com/telekom-security/nwxce.git`  
 All Ansible related files are located in the [`cloud/ansible/openstack`](openstack) folder.
 
 <a name="settings"></a>
@@ -122,7 +122,7 @@ For more information have a look in the [os_server](https://docs.ansible.com/ans
 
 <a name="remote-user"></a>
 ## Ansible remote user
-You may have to adjust the `remote_user` in the Ansible Playbook under [`openstack/deploy_tpot.yaml`](openstack/deploy_tpot.yaml) depending on your Debian base image (e.g. on Open Telekom Cloud the default Debian user is `linux`).
+You may have to adjust the `remote_user` in the Ansible Playbook under [`openstack/deploy_nwx.yaml`](openstack/deploy_nwx.yaml) depending on your Debian base image (e.g. on Open Telekom Cloud the default Debian user is `linux`).
 
 <a name="instance-settings"></a>
 ## Instance settings
@@ -152,16 +152,16 @@ Here you can set the password for your Debian user (**you should definitely chan
 user_password: LiNuXuSeRPaSs#
 ```
 
-<a name="tpot-conf"></a>
-## Configure `tpot.conf.dist`
-The file is located in [`iso/installer/tpot.conf.dist`](/iso/installer/tpot.conf.dist).  
+<a name="nwx-conf"></a>
+## Configure `nwx.conf.dist`
+The file is located in [`iso/installer/nwx.conf.dist`](/iso/installer/nwx.conf.dist).  
 Here you can choose:
   - between the various T-Pot editions
   - a username for the web interface
   - a password for the web interface (**you should definitely change that**)
 
 ```
-# tpot configuration file
+# nwx configuration file
 # myCONF_TPOT_FLAVOR=[STANDARD, SENSOR, INDUSTRIAL, COLLECTOR, NEXTGEN]
 myCONF_TPOT_FLAVOR='STANDARD'
 myCONF_WEB_USER='webuser'
@@ -170,7 +170,7 @@ myCONF_WEB_PW='w3b$ecret'
 
 <a name="ews-cfg"></a>
 ## Optional: Custom `ews.cfg`
-Enable this by uncommenting the role in the [deploy_tpot.yaml](openstack/deploy_tpot.yaml) playbook.
+Enable this by uncommenting the role in the [deploy_nwx.yaml](openstack/deploy_nwx.yaml) playbook.
 ```
 #    - custom_ews
 ```
@@ -195,7 +195,7 @@ token = your_token
 
 <a name="hpfeeds"></a>
 ## Optional: Custom HPFEEDS
-Enable this by uncommenting the role in the [deploy_tpot.yaml](openstack/deploy_tpot.yaml) playbook.
+Enable this by uncommenting the role in the [deploy_nwx.yaml](openstack/deploy_nwx.yaml) playbook.
 ```
 #    - custom_hpfeeds
 ```
@@ -217,16 +217,16 @@ myFORMAT=json
 # Deploying a T-Pot :honey_pot::honeybee:
 Now, after configuring everything, we can finally start deploying T-Pots!  
 Go to the [`openstack`](openstack) folder and run the Ansible Playbook with:  
-`ansible-playbook deploy_tpot.yaml`  
+`ansible-playbook deploy_nwx.yaml`  
 (Yes, it is as easy as that :smile:)
 
 If you are running on a machine which asks for a sudo password, you can use:  
-`ansible-playbook --ask-become-pass deploy_tpot.yaml`
+`ansible-playbook --ask-become-pass deploy_nwx.yaml`
 
 The Playbook will first install required packages on the Ansible Master and then deploy a new server instance.  
 After that, T-Pot gets installed and configured on the newly created host, optionally custom configs are applied and finally it reboots.
 
-Once this is done, you can proceed with connecting/logging in to the T-Pot according to the [documentation](https://github.com/telekom-security/tpotce#ssh-and-web-access).
+Once this is done, you can proceed with connecting/logging in to the T-Pot according to the [documentation](https://github.com/telekom-security/nwxce#ssh-and-web-access).
 
 <a name="documentation"></a>
 # Further documentation

@@ -10,7 +10,7 @@ variable "linux_password" {
 
 # Cloud resources name configuration
 variable "secgroup_name" {
-  default = "tpot-secgroup"
+  default = "nwx-secgroup"
 }
 
 variable "secgroup_desc" {
@@ -18,19 +18,19 @@ variable "secgroup_desc" {
 }
 
 variable "network_name" {
-  default = "tpot-network"
+  default = "nwx-network"
 }
 
 variable "subnet_name" {
-  default = "tpot-subnet"
+  default = "nwx-subnet"
 }
 
 variable "router_name" {
-  default = "tpot-router"
+  default = "nwx-router"
 }
 
 variable "ecs_prefix" {
-  default = "tpot-"
+  default = "nwx-"
 }
 
 # ECS configuration
@@ -59,10 +59,10 @@ variable "volume_size" {
   description = "Set the volume size"
 }
 
-# These will go in the generated tpot.conf file
-variable "tpot_flavor" {
+# These will go in the generated nwx.conf file
+variable "nwx_flavor" {
   default = "STANDARD"
-  description = "Specify your tpot flavor [STANDARD, SENSOR, INDUSTRIAL, COLLECTOR, NEXTGEN]"
+  description = "Specify your nwx flavor [STANDARD, SENSOR, INDUSTRIAL, COLLECTOR, NEXTGEN]"
 }
 
 variable "web_user" {

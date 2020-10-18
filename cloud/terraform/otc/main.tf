@@ -30,18 +30,18 @@ resource "opentelekomcloud_networking_router_interface_v2" "router_interface_1" 
   subnet_id = opentelekomcloud_networking_subnet_v2.subnet_1.id
 }
 
-resource "random_id" "tpot" {
+resource "random_id" "nwx" {
   byte_length = 6
   prefix      = var.ecs_prefix
 }
 
 resource "opentelekomcloud_compute_instance_v2" "ecs_1" {
   availability_zone = var.availability_zone
-  name              = random_id.tpot.b64
+  name              = random_id.nwx.b64
   flavor_name       = var.flavor
   key_pair          = var.key_pair
   security_groups   = [opentelekomcloud_networking_secgroup_v2.secgroup_1.name]
-  user_data         = templatefile("../cloud-init.yaml", {timezone = var.timezone, password = var.linux_password, tpot_flavor = var.tpot_flavor, web_user = var.web_user, web_password = var.web_password})
+  user_data         = templatefile("../cloud-init.yaml", {timezone = var.timezone, password = var.linux_password, nwx_flavor = var.nwx_flavor, web_user = var.web_user, web_password = var.web_password})
 
   network {
     name = opentelekomcloud_networking_network_v2.network_1.name

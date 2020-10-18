@@ -2,7 +2,7 @@ provider "aws" {
   region = var.ec2_region
 }
 
-resource "aws_security_group" "tpot" {
+resource "aws_security_group" "nwx" {
   name        = "T-Pot"
   description = "T-Pot Honeypot"
   vpc_id      = var.ec2_vpc_id
@@ -47,7 +47,7 @@ resource "aws_security_group" "tpot" {
   }
 }
 
-resource "aws_instance" "tpot" {
+resource "aws_instance" "nwx" {
   ami           = var.ec2_ami[var.ec2_region]
   instance_type = var.ec2_instance_type
   key_name      = var.ec2_ssh_key_name
@@ -60,7 +60,7 @@ resource "aws_instance" "tpot" {
     volume_size           = 128
     delete_on_termination = true
   }
-  user_data         = templatefile("../cloud-init.yaml", {timezone = var.timezone, password = var.linux_password, tpot_flavor = var.tpot_flavor, web_user = var.web_user, web_password = var.web_password})
-  vpc_security_group_ids = [aws_security_group.tpot.id]
+  user_data         = templatefile("../cloud-init.yaml", {timezone = var.timezone, password = var.linux_password, nwx_flavor = var.nwx_flavor, web_user = var.web_user, web_password = var.web_password})
+  vpc_security_group_ids = [aws_security_group.nwx.id]
   associate_public_ip_address = true
 }

@@ -70,10 +70,10 @@ variable "linux_password" {
   description = "Set a password for the default user"
 }
 
-# These will go in the generated tpot.conf file
+# These will go in the generated nwx.conf file
 variable "nwx_flavor" {
   default = "STANDARD"
-  description = "Specify your tpot flavor [STANDARD, SENSOR, INDUSTRIAL, COLLECTOR, NEXTGEN]"
+  description = "Specify your nwx flavor [STANDARD, SENSOR, INDUSTRIAL, COLLECTOR, NEXTGEN]"
 }
 
 variable "web_user" {

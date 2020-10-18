@@ -73,7 +73,7 @@ Settings for cloud-init:
 * `linux_password`- Set a password for the Linux Operating System user (which is also used on the Admin UI)
 
 Settings for T-Pot:  
-* `tpot_flavor` - Set the flavor of the T-Pot (Available flavors are listed in the variable's description)
+* `nwx_flavor` - Set the flavor of the T-Pot (Available flavors are listed in the variable's description)
 * `web_user` - Set a username for the T-Pot Kibana Dasboard
 * `web_password` - Set a password for the T-Pot Kibana Dashboard
 
@@ -95,7 +95,7 @@ In `otc/variables.tf`, you can change the additional variables:
 * `key_pair` - Specify an existing SSH key pair
 * `image_id`
 * `volume_size`  
-Furthermore you can configure the naming of the created infrastructure (per default everything gets prefixed with "tpot-", e.g. "tpot-router").
+Furthermore you can configure the naming of the created infrastructure (per default everything gets prefixed with "nwx-", e.g. "nwx-router").
 
 <a name="initialising"></a>
 ## Initialising
@@ -124,4 +124,4 @@ If you want the remove the built infrastructure, you can run [`terraform destroy
 
 <a name="connecting"></a>
 ## Connecting to the Instance
-When the installation is completed, you can proceed with connecting/logging in to the T-Pot according to the [documentation](https://github.com/telekom-security/tpotce#ssh-and-web-access).
+When the installation is completed, you can proceed with connecting/logging in to the T-Pot according to the [documentation](https://github.com/telekom-security/nwxce#ssh-and-web-access).
