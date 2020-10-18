@@ -16,7 +16,7 @@ chpasswd:
 
 write_files:
   - content: |
-      # tpot configuration file
+      # nwx configuration file
       myCONF_TPOT_FLAVOR='${tpot_flavor}'
       myCONF_WEB_USER='${web_user}'
       myCONF_WEB_PW='${web_password}'
