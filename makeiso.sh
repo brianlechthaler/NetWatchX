@@ -10,9 +10,9 @@ myBACKTITLE="T-Pot - ISO Creator"
 # For stability reasons Debian Sid installation is built on a stable installer
 myMINIISOLINK="http://ftp.debian.org/debian/dists/buster/main/installer-amd64/current/images/netboot/mini.iso"
 myMINIISO="mini.iso"
-myTPOTISO="tpot.iso"
-myTPOTDIR="tpotiso"
-myTPOTSEED="iso/preseed/tpot.seed"
+myTPOTISO="nwx.iso"
+myTPOTDIR="nwxiso"
+myTPOTSEED="iso/preseed/nwx.seed"
 myPACKAGES="dialog genisoimage syslinux syslinux-utils pv rsync udisks2 xorriso"
 myPFXFILE="iso/installer/keys/8021x.pfx"
 myINSTALLERPATH="iso/installer/install.sh"
@@ -232,7 +232,7 @@ cd ..
 mkdir -p $myTPOTDIR/tmp/opt/
 cp iso/installer -R $myTPOTDIR/tmp/opt/
 cp iso/isolinux/* $myTPOTDIR/
-cp iso/preseed/tpot.seed $myTPOTDIR/tmp/preseed.cfg
+cp iso/preseed/nwx.seed $myTPOTDIR/tmp/preseed.cfg
 
 # Let's create the new initrd
 cd $myTPOTDIR/tmp
@@ -248,7 +248,7 @@ xorrisofs -gui -D -r -V "T-Pot" -cache-inodes -J -l -b isolinux.bin -c boot.cat 
 echo 100 | dialog --backtitle "$myBACKTITLE" --title "[ Building T-Pot .iso ... Done! ]" --gauge "" 5 70
 cd ..
 isohybrid $myTPOTISO
-sha256sum $myTPOTISO > tpot.sha256
+sha256sum $myTPOTISO > nwx.sha256
 
 # Let's write the image
 while true;

@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Some global vars
-myCONFIGFILE="/opt/tpot/etc/tpot.yml"
-myCOMPOSEPATH="/opt/tpot/etc/compose"
+myCONFIGFILE="/opt/nwx/etc/nwx.yml"
+myCOMPOSEPATH="/opt/nwx/etc/compose"
 myRED="[0;31m"
 myGREEN="[0;32m"
 myWHITE="[0;0m"
 myBLUE="[0;34m"
 
-# Check for existing tpot.yml
+# Check for existing nwx.yml
 function fuCONFIGCHECK () {
   echo "### Checking for T-Pot configuration file ..."
   if ! [ -L $myCONFIGFILE ];
@@ -25,7 +25,7 @@ function fuCONFIGCHECK () {
       echo "###### $myBLUE$myCONFIGFILE$myWHITE [ $myGREEN""OK""$myWHITE ]"
     else
       echo "[ $myRED""NOT OK""$myWHITE ] - Broken symlink and / or restore failed."
-      echo "Please create a link to your desired config i.e. 'ln -s /opt/tpot/etc/compose/standard.yml /opt/tpot/etc/tpot.yml'."
+      echo "Please create a link to your desired config i.e. 'ln -s /opt/nwx/etc/compose/standard.yml /opt/nwx/etc/nwx.yml'."
       exit
   fi
 echo
@@ -103,7 +103,7 @@ if [ -f "version" ];
 	exit
     fi
   else
-    echo "###### $myBLUE""Unable to determine version. Please run 'update.sh' from within '/opt/tpot'.""$myWHITE"" [ $myRED""NOT OK""$myWHITE ]"
+    echo "###### $myBLUE""Unable to determine version. Please run 'update.sh' from within '/opt/nwx'.""$myWHITE"" [ $myRED""NOT OK""$myWHITE ]"
     exit
   fi
 echo
@@ -114,7 +114,7 @@ echo
 function fuSTOP_TPOT () {
 echo "### Need to stop T-Pot ..."
 echo -n "###### $myBLUE Now stopping T-Pot.$myWHITE "
-systemctl stop tpot
+systemctl stop nwx
 if [ $? -ne 0 ];
   then
     echo " [ $myRED""NOT OK""$myWHITE ]"
@@ -136,11 +136,11 @@ echo
 
 # Backup
 function fuBACKUP () {
-local myARCHIVE="/root/$(date +%Y%m%d%H%M)_tpot_backup.tgz"
+local myARCHIVE="/root/$(date +%Y%m%d%H%M)_nwx_backup.tgz"
 local myPATH=$PWD
 echo "### Create a backup, just in case ... "
 echo -n "###### $myBLUE Building archive in $myARCHIVE $myWHITE"
-cd /opt/tpot
+cd /opt/nwx
 tar cvfz $myARCHIVE * 2>&1>/dev/null
 if [ $? -ne 0 ];
   then
@@ -170,7 +170,7 @@ fi
 
 # Let's load docker images in parallel
 function fuPULLIMAGES {
-local myTPOTCOMPOSE="/opt/tpot/etc/tpot.yml"
+local myTPOTCOMPOSE="/opt/nwx/etc/nwx.yml"
 for name in $(cat $myTPOTCOMPOSE | grep -v '#' | grep image | cut -d'"' -f2 | uniq)
   do
     docker pull $name &
@@ -253,7 +253,7 @@ mkdir -vp /data/adbhoney/{downloads,log} \
 
 ### Let's take care of some files and permissions
 chmod 770 -R /data
-chown tpot:tpot -R /data
+chown nwx:nwx -R /data
 chmod 644 -R /data/nginx/conf
 chmod 644 -R /data/nginx/cert
 
@@ -262,22 +262,22 @@ echo "######$myBLUE This might take a while, please be patient!$myWHITE"
 fuPULLIMAGES 2>&1>/dev/null
 
 #fuREMOVEOLDIMAGES "1903"
-echo "### If you made changes to tpot.yml please ensure to add them again."
+echo "### If you made changes to nwx.yml please ensure to add them again."
 echo "### We stored the previous version as backup in /root/."
 echo "### Some updates may need an import of the latest Kibana objects as well."
 echo "### Download the latest objects here if they recently changed:"
-echo "### https://raw.githubusercontent.com/telekom-security/tpotce/master/etc/objects/kibana_export.ndjson.zip"
+echo "### https://raw.githubusercontent.com/telekom-security/nwxce/master/etc/objects/kibana_export.ndjson.zip"
 echo "### Export and import the objects easily through the Kibana WebUI:"
 echo "### Go to Kibana > Management > Saved Objects > Export / Import"
 echo "### Or use the command:"
-echo "### import_kibana-objects.sh /opt/tpot/etc/objects/kibana-objects.tgz"
+echo "### import_kibana-objects.sh /opt/nwx/etc/objects/kibana-objects.tgz"
 echo "### All objects will be overwritten upon import, make sure to run an export first if you made changes."
 }
 
 function fuRESTORE_EWSCFG () {
 if [ -f '/data/ews/conf/ews.cfg' ] && ! grep 'ews.cfg' $myCONFIGFILE > /dev/null; then
     echo
-    echo "### Restoring volume mount for ews.cfg in tpot.yml"
+    echo "### Restoring volume mount for ews.cfg in nwx.yml"
     sed -i --follow-symlinks '/\/opt\/ewsposter\/ews.ip/a\\ \ \ \ \ - /data/ews/conf/ews.cfg:/opt/ewsposter/ews.cfg' $myCONFIGFILE
 fi
 }
@@ -285,7 +285,7 @@ fi
 function fuRESTORE_HPFEEDS () {
 if [ -f '/data/ews/conf/hpfeeds.cfg' ]; then
     echo
-    echo "### Restoring HPFEEDS in tpot.yml"
+    echo "### Restoring HPFEEDS in nwx.yml"
     ./bin/hpfeeds_optin.sh --conf=/data/ews/conf/hpfeeds.cfg
 fi
 }
@@ -306,7 +306,7 @@ fi
 # Only run with command switch
 if [ "$1" != "-y" ]; then
   echo "This script will update / upgrade all T-Pot related scripts, tools and packages to the latest versions."
-  echo "A backup of /opt/tpot will be written to /root. If you are unsure, you should save your work."
+  echo "A backup of /opt/nwx will be written to /root. If you are unsure, you should save your work."
   echo "This is a beta feature and only recommended for experienced users."
   echo "If you understand the involved risks feel free to run this script with the '-y' switch."
   echo
