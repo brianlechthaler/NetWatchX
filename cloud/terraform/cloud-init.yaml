@@ -6,8 +6,8 @@ packages:
 
 runcmd:
   - git clone https://github.com/brianlechthaler/NetWatchX /root/nwx
-  - /root/nwx/iso/installer/install.sh --type=auto --conf=/root/tpot.conf
-  - rm /root/tpot.conf
+  - /root/nwx/iso/installer/install.sh --type=auto --conf=/root/nwx.conf
+  - rm /root/nwx.conf
   - /sbin/shutdown -r now
 
 password: ${password}
