@@ -71,7 +71,7 @@ variable "linux_password" {
 }
 
 # These will go in the generated tpot.conf file
-variable "tpot_flavor" {
+variable "nwx_flavor" {
   default = "STANDARD"
   description = "Specify your tpot flavor [STANDARD, SENSOR, INDUSTRIAL, COLLECTOR, NEXTGEN]"
 }
