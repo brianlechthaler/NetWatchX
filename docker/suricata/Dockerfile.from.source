@@ -94,6 +94,7 @@ RUN    apk -U add \
     adduser -S -H -u 2000 -D -g 2000 suri && \
     chmod 644 /etc/suricata/*.config && \
     cp /root/dist/*.yaml /etc/suricata/ && \
+    touch /root/dist/empty.conf && \
     cp /root/dist/*.conf /etc/suricata/ && \
     cp /root/dist/*.bpf /etc/suricata/ && \
     mkdir -p /etc/suricata/rules && \
