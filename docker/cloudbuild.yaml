@@ -15,7 +15,7 @@ steps:
   args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/head:latest', 'docker/elk/head']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'us.gcr.io/$PROJECT_ID/tshark:latest', 'docker/tshark']
-timeout: 1200s
+timeout: 3600s
 options:
  machineType: 'N1_HIGHCPU_32'
 images:
