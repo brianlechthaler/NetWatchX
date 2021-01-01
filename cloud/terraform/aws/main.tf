@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 resource "aws_security_group" "nwx" {
-  name        = "T-Pot"
-  description = "T-Pot Honeypot"
+  name        = "NetWatchX"
+  description = "NetWatchX Network Monitoring"
   vpc_id      = var.ec2_vpc_id
   ingress {
     from_port   = 0
